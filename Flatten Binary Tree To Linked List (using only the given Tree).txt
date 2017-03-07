@@ -1,0 +1,81 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+ 
+ 
+class Solution {
+public:
+    
+    void flatten(TreeNode* root) 
+    {
+        if (root != NULL)
+            TreeNode ptr = convertLinkedList(root);
+        
+        /*cout << endl << endl;
+        TreeNode *aux = root;
+        while(aux!= NULL)
+        {
+            cout << (*aux).val << " ";
+            aux = aux ->right;
+        }*/
+    }
+    
+    TreeNode& convertLinkedList (TreeNode *root)
+    {
+        TreeNode *ptr;
+        TreeNode justInCase(-1);
+        //cout << (*root).val << endl;
+
+        if (root != NULL)
+        {
+            if (root -> left != NULL)
+            {
+                if (root -> left -> left != NULL)
+                {
+                    ptr = &convertLinkedList(root -> left);
+                    ptr -> right = root -> right;
+                    root -> right = root -> left;
+                    root -> left = NULL;
+                    
+                    if (ptr -> right != NULL)
+                        return convertLinkedList(ptr -> right);
+                }
+                else if (root -> left -> right == NULL)
+                {
+                    root -> left -> right = root -> right;
+                    root -> right = root -> left;
+                    root -> left = NULL;
+                    if (root -> right -> right != NULL)
+                        return convertLinkedList(root -> right -> right);
+                    else
+                        return *(root -> right);
+                }
+                else if (root -> left -> right != NULL)
+                {
+                    ptr = &convertLinkedList (root -> left -> right);
+                    ptr -> right = root -> right;
+                    root -> right = root -> left;
+                    root -> left = NULL;
+                    
+                    if (ptr -> right != NULL)
+                        return convertLinkedList (ptr -> right);
+                }
+            }
+           
+            if (root -> right != NULL)
+                return convertLinkedList (root -> right);
+            else
+                return (*root);
+        }
+        else
+            return justInCase;
+
+    }
+};

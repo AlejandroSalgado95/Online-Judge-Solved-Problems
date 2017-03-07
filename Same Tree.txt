@@ -1,0 +1,111 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) 
+    {
+        int iQuantityActLvl = 1;
+        int iQuantityNxtLvl = 0;
+        vector<int*> vLvlNumb1;
+        vector<int*> vLvlNumb2;
+        
+        queue<TreeNode*> MyTreeNodes1;
+        queue<TreeNode*> MyTreeNodes2;
+
+        MyTreeNodes1.push(p);
+        MyTreeNodes2.push(q);
+        
+            
+    
+            while (iQuantityActLvl != 0)
+            {
+                TreeNode *TempNode1 = MyTreeNodes1.front();
+                TreeNode *TempNode2 = MyTreeNodes2.front();
+                MyTreeNodes1.pop();
+                MyTreeNodes2.pop();
+
+                int *iValPtr1 = NULL;
+                int *iValPtr2 = NULL;
+                iQuantityActLvl--;
+    
+                if (TempNode1 != NULL)
+                {
+                    MyTreeNodes1.push(TempNode1->left);
+                    MyTreeNodes1.push(TempNode1->right);
+                    iValPtr1 = new int(TempNode1->val);
+                    vLvlNumb1.push_back(iValPtr1);
+                    iQuantityNxtLvl += 2;
+                }
+                
+                else
+                {
+                    iValPtr1 = NULL;
+                    vLvlNumb1.push_back(iValPtr1);
+                }
+                
+                if (TempNode2 != NULL)
+                {
+                    MyTreeNodes2.push(TempNode2->left);
+                    MyTreeNodes2.push(TempNode2->right);
+                    iValPtr2 = new int(TempNode2->val);
+                    vLvlNumb2.push_back(iValPtr2);
+                }
+                
+                else
+                {
+                    iValPtr2 = NULL;
+                    vLvlNumb2.push_back(iValPtr2);
+                }
+                
+                if (iQuantityActLvl == 0)
+                {
+                    iQuantityActLvl = iQuantityNxtLvl;
+                    iQuantityNxtLvl = 0;
+                   
+                   /* 
+                    for (int iCont = 0; iCont < vLvlNumb.size(); iCont++)
+                        cout << *vLvlNumb[iCont] << " ";
+                    
+                    cout << endl;*/
+
+                    
+                    for (int iCont = 0; iCont < vLvlNumb1.size(); iCont++)
+                    {
+                               
+                         if ((vLvlNumb1[iCont] == NULL) && (vLvlNumb2[iCont] != NULL))
+                             return false;
+                                
+                         if ((vLvlNumb1[iCont] != NULL) && (vLvlNumb2[iCont] == NULL))
+                             return false;
+                               
+                         if ((vLvlNumb1[iCont] != NULL) && (vLvlNumb2[iCont] != NULL))
+                            if (*vLvlNumb1[iCont] != *vLvlNumb2[iCont])
+                             return false;
+                
+                    }
+                    
+                
+                    while(!vLvlNumb1.empty())
+                        vLvlNumb1.pop_back();
+                    
+                    while(!vLvlNumb2.empty())
+                        vLvlNumb2.pop_back();
+    
+                }
+  
+            }
+        
+        return true;
+    }
+};
+
+
+
+

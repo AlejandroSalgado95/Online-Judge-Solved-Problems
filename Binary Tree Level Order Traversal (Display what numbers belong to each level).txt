@@ -1,0 +1,83 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) 
+    {
+        int iLevel = 0;
+        int iQuantity = 0;
+        vector<vector<int>> vAnswer;
+        
+
+        queue<TreeNode*> MyTreeNodes;
+        //TreeNode TempNode(-1);
+
+        if (root != NULL)
+        {
+            bool bCheck = false;
+            vector<int> Temp;
+            vAnswer.push_back(Temp);
+            vAnswer[iLevel++].push_back(root->val);
+
+            if (root -> left != NULL)
+            {
+                iQuantity++;
+                vAnswer.push_back(Temp);
+                bCheck = true;
+                MyTreeNodes.push(root->left);
+            }
+            
+            if (root -> right != NULL)
+            {
+                iQuantity++;
+                MyTreeNodes.push(root->right);
+                if (!bCheck)
+                    vAnswer.push_back(Temp);
+            }
+            
+        }
+            
+    //[2,null,3,null,4,null,5,null,6]
+    
+        while (!MyTreeNodes.empty())
+        {
+            
+            //bool bNextLvl = false;
+            TreeNode *TempNode = MyTreeNodes.front();
+            MyTreeNodes.pop();
+            iQuantity--;
+            vAnswer[iLevel].push_back(TempNode->val);
+
+            if (TempNode->left != NULL)
+                MyTreeNodes.push(TempNode->left);
+                
+            if (TempNode->right != NULL)
+                MyTreeNodes.push(TempNode->right);
+            
+            if (iQuantity == 0 && !MyTreeNodes.empty())
+            {
+                 iLevel++;
+                 vector<int> Temp;
+                 vAnswer.push_back(Temp);
+                 iQuantity = MyTreeNodes.size();
+                 //bNextLvl = true;
+            }
+            
+            /*if (bNextLvl)
+                iQuantity = MyTreeNodes.size();*/
+        }
+        
+        
+        return vAnswer;
+        
+        
+    }
+};

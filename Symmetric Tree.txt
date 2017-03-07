@@ -1,0 +1,88 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) 
+    {
+        int iLevel = 0;
+        int iQuantityActLvl = 0;
+        int iQuantityNxtLvl = 0;
+        vector<int*> vLvlNumb;
+        queue<TreeNode*> MyTreeNodes;
+
+        if (root != NULL)
+        {
+            iQuantityActLvl +=2;
+            MyTreeNodes.push(root->left);
+            MyTreeNodes.push(root->right);
+        
+            
+    
+            while (iQuantityActLvl != 0)
+            {
+                TreeNode *TempNode = MyTreeNodes.front();
+                int *iValPtr = NULL;
+                MyTreeNodes.pop();
+                iQuantityActLvl--;
+    
+                if (TempNode != NULL)
+                {
+                    MyTreeNodes.push(TempNode->left);
+                    MyTreeNodes.push(TempNode->right);
+                    iValPtr = new int(TempNode->val);
+                    vLvlNumb.push_back(iValPtr);
+                    iQuantityNxtLvl += 2;
+                }
+                
+                else
+                {
+                    iValPtr = NULL;
+                    vLvlNumb.push_back(iValPtr);
+                }
+                
+                if (iQuantityActLvl == 0)
+                {
+                    iQuantityActLvl = iQuantityNxtLvl;
+                    iQuantityNxtLvl = 0;
+                   
+                   /* 
+                    for (int iCont = 0; iCont < vLvlNumb.size(); iCont++)
+                        cout << *vLvlNumb[iCont] << " ";
+                    
+                    cout << endl;*/
+
+                    
+                    for(int iCont = 0, iCont2 = vLvlNumb.size()-1; iCont < vLvlNumb.size()/2; iCont++,iCont2--)
+                    {
+                               
+                               if ((vLvlNumb[iCont] == NULL) && (vLvlNumb[iCont2] != NULL))
+                                    return false;
+                                
+                               if ((vLvlNumb[iCont] != NULL) && (vLvlNumb[iCont2] == NULL))
+                                    return false;
+                               
+                               if ((vLvlNumb[iCont] != NULL) && (vLvlNumb[iCont2] != NULL))
+                                  if (*vLvlNumb[iCont] != *vLvlNumb[iCont2])
+                                    return false;
+                
+                    }
+                    
+                
+                    while(!vLvlNumb.empty())
+                        vLvlNumb.pop_back();
+    
+                }
+  
+            }
+        }
+        
+        return true;
+    }
+};

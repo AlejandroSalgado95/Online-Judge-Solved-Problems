@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+ 
+
+
+ 
+ 
+
+class Solution 
+{
+    public:
+    
+    int iMaxDepth = 0;
+    
+     void REALmaxDepth(TreeNode* Node, int iTempDepth) 
+    {
+        if (Node != NULL)
+        {
+            iTempDepth++;
+            if (iTempDepth > iMaxDepth)
+            {
+                iMaxDepth = iTempDepth;
+
+            }
+
+            REALmaxDepth(Node -> right, iTempDepth);
+            REALmaxDepth(Node -> left, iTempDepth);
+        }
+        
+    }
+
+    int maxDepth(TreeNode* Node) 
+    {
+        REALmaxDepth(Node,0);
+        return iMaxDepth;
+    }
+    
+   
+    
+};

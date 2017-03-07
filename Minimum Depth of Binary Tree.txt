@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int iMinDepth = INT_MAX;
+    
+    int minDepth(TreeNode* root) 
+    {
+        RealMinDepth(root, 1);
+        
+        if (root == NULL)
+            iMinDepth = 0;
+        
+        return iMinDepth;
+    }
+    
+    void RealMinDepth(TreeNode* root, int iActualDepth)
+    {
+        if (root != NULL)
+        {
+            cout << (*root).val << endl;
+            
+            if ((root -> left == NULL) && (root -> right == NULL))
+                if (iActualDepth < iMinDepth)
+                    iMinDepth = iActualDepth;
+            
+            RealMinDepth(root -> left, iActualDepth + 1);
+            RealMinDepth(root -> right, iActualDepth + 1);
+           
+            //I dont know why it just doesnt work if I put the recursive calls of the function inside of the "else"
+            /*
+            else 
+            {
+                RealMinDepth(root -> left, iActualDepth + 1);
+                RealMinDepth(root -> right, iActualDepth + 1);
+            }*/
+        }
+    }
+};

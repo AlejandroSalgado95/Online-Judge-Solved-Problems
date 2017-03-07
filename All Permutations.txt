@@ -1,0 +1,51 @@
+class Solution {
+public:
+    
+    vector<int> tempAns;
+    vector<int> numbers;
+    vector<vector<int>> permutations;
+    int iQuantity;
+    
+    vector<vector<int>> permute(vector<int>& nums) 
+    {
+        vector <bool> unusedNumbers;
+        for (int iCount = 0; iCount < nums.size(); iCount++)
+        {
+            numbers.push_back(nums[iCount]);
+            tempAns.push_back(-1);
+            unusedNumbers.push_back(true);
+        }
+        
+        //int iActSolAux = 0;
+        iQuantity = numbers.size();
+        //cout << iQuantity << endl;
+        
+        RealPermute(unusedNumbers/*, iActSolAux*/,0);
+        return permutations;
+
+    }
+    
+    void RealPermute(vector<bool> unusedNumbers/*, int &iActSol*/, int iActNumb)
+    {
+        if (iActNumb < iQuantity)
+        {
+            for (int iCount = 0; iCount < iQuantity; iCount++)
+            {
+                if (unusedNumbers[iCount])
+                {
+                    //cout << iActNumb << " ";
+                    unusedNumbers[iCount] = false;
+                    tempAns[iActNumb] = numbers[iCount];
+                    RealPermute(unusedNumbers/*, iActSol*/, iActNumb + 1);
+                    unusedNumbers[iCount] = true;
+                }
+            }
+        }
+        else 
+        {
+            //cout << endl; 
+            permutations.push_back(tempAns);
+            //iActSol++;
+        }
+    }
+};

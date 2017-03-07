@@ -1,0 +1,69 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) 
+    {
+        //1.- Save the elements of the linked list in an array (done)
+        //2.- if k is greater than the quantity of Nodes in the linked list, that means you will move to the right more times than you  
+        //      need to. Therefore, we will set k to its minimum equivalent: k = k % size of linked list. 
+        //      Example: [1,2,3] k = 11  result = [2,3,1]; this is the same for k = 11%3, k = 2  result = [2,3,1]
+        //3.- Iterate the following as many times as elements in the array (same amount in the linked list), starting from array[0]
+        //      We are gonna change the position of the actual element of the linked list k positions to the right
+        //      Note: array[0] = first element in linked list, and so on
+        //      3.1.- Iterate as many times as the value of k, starting from nextNode (pointer to Node; points to head at first iteration)
+        //              3.1.1.- Move to the right
+        //              3.1.2.- If counter == 1 (moved once to the right), then save address of the visited Node in nextNode
+        //              3.1.3.- If counter == k, then change value of the visited Node for the value of array[actualPos]
+        //              3.1.4.- If there is a Node beyond the actual one (actualNode -> next != NULL), then go to the next Node
+        //              3.1.5.- else, go back to the first Node (actualNode = head)
+         vector<int> iNumbers;
+         ListNode *aux = head;
+         ListNode *nextNode = head;
+         
+         if (aux != NULL)
+         {
+             while(aux != NULL)
+             {
+                 iNumbers.push_back(aux -> val);
+                 aux = aux -> next;
+             }
+             
+             if (k > iNumbers.size())
+                k = k % iNumbers.size();
+             
+             if (k != 0)
+                 for (int iActualPos = 0; iActualPos < iNumbers.size(); iActualPos++)
+                 {
+                    ListNode *actualNode = nextNode;
+                    
+                    for (int iCount = 0; iCount <= k; iCount++)
+                    {
+                        if (iCount == 1)
+                            nextNode = actualNode;
+                        
+                        if (iCount == k)
+                        {
+                            cout << actualNode -> val << " changed to " << iNumbers[iActualPos] << endl;
+                            actualNode -> val = iNumbers[iActualPos];
+                            
+                        }
+                            
+                        if (actualNode -> next != NULL)
+                            actualNode = actualNode -> next;
+                        else
+                            actualNode = head;
+                    }
+                    
+                 }
+         }
+         
+         return head;
+    }
+};

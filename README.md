@@ -1,2 +1,10 @@
 # Online-Judge-Solved-Problems
-This is a repository for my solved Online Judge Problems, most of them from www.leetcode.com
+
+Descripcion:
+Repositorio para los problemas que he resuelto de tipo "juez en linea", especialmente problemas provenientes de www.leetcode.com
+
+Pre-requisitos:
+Tener compilador de c++ instalado
+
+Instrucciones:
+Descargar cualquier programa y correrlo en consola o en algun IDE en particular (Ej. Codeblocks, Eclipse, etc.)
